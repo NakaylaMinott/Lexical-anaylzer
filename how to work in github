@@ -1,0 +1,41 @@
+****To avoid conflicts, each member should work in their own branch.****
+
+2️⃣ Workflow:
+
+  1) Clone the repo:
+      git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+
+  2) Create a new branch for your feature:
+      git checkout -b feature-branch-name
+
+  3) Work on your code and commit changes:
+    git add .
+    git commit -m "Added feature XYZ"
+
+  4) Push your branch:
+  
+    git push origin feature-branch-name
+
+   5) Open a Pull Request (PR) on GitHub.
+
+4️⃣ Code Review via Pull Requests
+
+   1 Once a feature is ready, open a Pull Request (PR).
+   2 Other team members review the code and leave comments.
+   3 Once approved, merge the PR into the main branch.
+
+5️⃣ Handle Merge Conflicts
+
+If multiple people edit the same file, conflicts may happen. Resolve them by:
+
+1) Pulling the latest changes:
+  git pull origin main
+
+2) Manually fixing conflicts.
+3) Adding and committing changes:
+    git add .
+    git commit -m "Resolved merge conflicts"
+
+4) Pushing the resolved branch:
+
+git push origin feature-branch-name
