@@ -6,11 +6,12 @@ public class Parser{
     private static List<Token> tokens;
     private int currentToken;
     private boolean generatedBNF;
-
+//intializes the token and the currentToken pointer
     public Parser(List<Token> tokens){
         this.tokens = tokens;
         this.currentToken = 0;
     }
+    //method to start parsing the source code
     public void parse(){
         try{
             program();
@@ -23,7 +24,7 @@ public class Parser{
            // return;
         }
     }
-
+//method to parse the program's structure 
     private void program() throws ParseException {
         match("KEYWORD");
         match("IDENTIFIER");
@@ -36,6 +37,7 @@ public class Parser{
         stmts();
         match("RBRACE");
     }
+    //method to parse declarations
     private void declares() throws ParseException {
         while(currentToken < tokens.size() && tokens.get(currentToken).type.equals("KEYWORD")){
            match("KEYWORD");
@@ -43,17 +45,20 @@ public class Parser{
             match("SEMICOLON");
         }
     }
+    //method to parse statements 
     private void stmts() throws ParseException {
         while(currentToken < tokens.size() && tokens.get(currentToken).type.equals("IDENTIFIER")){
             assign();
             match("SEMICOLON");
         }
     }
+    //method to parse an assignment 
     private void assign() throws ParseException {
         match("IDENTIFIER");
         match("ASSIGN");
         expr();
     }
+    //method to parse an expression
     private void expr() throws ParseException {
         match("IDENTIFIER");
         if(currentToken < tokens.size() && (tokens.get(currentToken).type.equals("MULTIPLY") || tokens.get(currentToken).type.equals("DIVIDE"))){
@@ -61,6 +66,7 @@ public class Parser{
             expr();
         }
     }
+    //method to parse a loop structure
     private void loop() throws ParseException {
         match("KEYWORD");
         match("LPAREN");
@@ -69,6 +75,7 @@ public class Parser{
         match("NUMBER");
         match("RPAREN");
     }
+    //method to check if the current token matches the expected 
     private void match(String expectedType) throws ParseException{
         if(currentToken < tokens.size() && tokens.get(currentToken).type.equals(expectedType)){
             currentToken++;
@@ -76,6 +83,7 @@ public class Parser{
             throw new ParseException("Expected "+ expectedType + ", but found " + (currentToken < tokens.size() ? tokens.get(currentToken).type :"end of input") + ". Token value: "+ (currentToken < tokens.size() ? tokens.get(currentToken).value : "end of input"));
         }
     }
+    //represent individual lexical units in the source
     static class Token{
         String type;
         String value;
@@ -86,22 +94,25 @@ public class Parser{
         }
 
     }
+    //custom ParseException to handle syntax errors
     static class ParseException extends Exception {
         ParseException(String message){
             super(message);
         }
     }
+    //main method to test the parser with sample codes
     public static void main(String[] args){
         //String SCode1  = "float sample1 (){ float data; float num; float diff; float data; data = data * num / dif; while (n >= 10) n = n * diff; }";
         String SCode2 = "float mul (float data1, float number ) { data1 = data1 * number; while (data >= const) }";
 
+        //tokenize the source code
         List<Token> token1 = lexer(SCode2);
         Parser parser1 = new Parser(token1);
         parser1.parse();
 
 
     }
-
+//convert source code into a list of tokens
     public static List<Token>lexer(String SC){
         List<Token> tokens1 = new ArrayList<>();
         String[] parts = SC.split("(?<=[{}(),;=*/>=])|(?=[{}(),;=*/>=])|\\s+");
@@ -126,6 +137,7 @@ public class Parser{
         }
         return tokens1;
     }
+    //helper method to match token
     private static String identifyTokenType(String token){
         switch (token) {
             case "float":
@@ -154,6 +166,7 @@ public class Parser{
 
         }
     }
+    //make sure token is a valid
     private static boolean isIdentifier(String token){
         if (token.length() == 0){
             return false;
@@ -170,7 +183,7 @@ public class Parser{
         }
         return true;
     }
-
+//method to check if a token is a number
     private static boolean isNumber(String token){
         try{
             Integer.parseInt(token);
