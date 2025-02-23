@@ -1,3 +1,9 @@
+/*
+lexer processes raw source code as a string of characters
+breaks it down into tokens using data structures such as HashSet, HashMap, and ArrayList
+to label each part according to its token type
+*/
+
 import java.util.*;
 
 class Lexer {
