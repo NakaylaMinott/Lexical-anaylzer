@@ -1,13 +1,6 @@
-/*
-this program reads source code.
-performs lexical analysis using the lexer class and prints the generated tokens
-it then uses recursive parsing to analyze the grammatical structure of the source code
-*/
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +19,10 @@ public class Main {
             for (Token token : tokens) {
                 System.out.println(token);
             }
+
+            //pass tokens to the parser
+            Parser parser = new Parser(tokens);
+            parser.parse();
 
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
