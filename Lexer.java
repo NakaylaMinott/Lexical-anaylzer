@@ -4,6 +4,7 @@ breaks it down into tokens using data structures such as HashSet, HashMap, and A
 to label each part according to its token type
 */
 
+
 import java.util.*;
 
 class Lexer {
@@ -71,7 +72,8 @@ class Lexer {
             }
             //deals with special characters
             if (isSpecialChar(currentChar)) {
-                tokens.add(new Token("SPECIAL", String.valueOf(currentChar), line));
+                String specialType = getSpecialTokenType(currentChar);
+                tokens.add(new Token(specialType, String.valueOf(currentChar), line));
                 position++;
                 continue;
             }
@@ -125,5 +127,18 @@ class Lexer {
     // checks if a character is a special character
     private boolean isSpecialChar(char c) {
         return "(){};,.".indexOf(c) != -1;
+    }
+
+    // distinct token types for special characters
+    private String getSpecialTokenType(char c) {
+        switch (c) {
+            case '(': return "LPAREN";
+            case ')': return "RPAREN";
+            case '{': return "LBRACE";
+            case '}': return "RBRACE";
+            case ';': return "SEMICOLON";
+            case ',': return "COMMA";
+            default: return "SPECIAL";
+        }
     }
 }
