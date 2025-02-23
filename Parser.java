@@ -1,4 +1,6 @@
-
+/*
+parser analyzes the sequence of tokens produced by the lexer and determines their grammatical structure based on a formal grammar 
+*/
 import java.util.List;
 
 public class Parser{
@@ -69,11 +71,11 @@ public class Parser{
     }
     //method to parse a loop structure
     private void loop() throws ParseException {
-        match("KEYWORD");       // while
-        match("LPAREN");        // (
-        match("IDENTIFIER");    // Loop condition variable (n)
+        match("KEYWORD");     
+        match("LPAREN");        
+        match("IDENTIFIER");    
 
-        // Handle relational operators (>=, <=, >, <)
+        // Handle relational operators
         if (tokens.get(currentToken).getType().equals("GREATER_THAN_EQUAL_OPERATOR") ||
                 tokens.get(currentToken).getType().equals("LESS_THAN_OPERATOR") ||
                 tokens.get(currentToken).getType().equals("GREATER_THAN_OPERATOR") ||
@@ -85,16 +87,15 @@ public class Parser{
                     tokens.get(currentToken).getValue() + "'");
         }
 
-        match("NUMBER");        // Constant value (10)
-        match("RPAREN");        // )
+        match("NUMBER");        
+        match("RPAREN");        
 
-        // Check for either a block `{}` or a single statement
+        // Check for either a block  or a single statement
         if (tokens.get(currentToken).getType().equals("LBRACE")) {
-            match("LBRACE");    // {
-            stmts();            // Loop body
-            match("RBRACE");    // }
+            match("LBRACE");    {
+            stmts();            
+            match("RBRACE");    }
         } else {
-            // Handle single-statement loops without braces
             stmts();
         }
     }
